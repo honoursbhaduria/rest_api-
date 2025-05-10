@@ -1,50 +1,60 @@
-import requests 
+# Import the requests library - it helps us talk to websites/APIs
+import requests
 
+# The website address we want to talk to
+api_url = "http://127.0.0.1:8000/api/"
 
-# endpoint = "https://www.httpbin.org/status/200"
+# Our question/message to send
+our_message = "this is honours how are you doing?"
 
-# endpoint  = "https://www.httpbin.org"
+print("Sending our message to the API...")
 
-endpoint = " http://127.0.0.1:8000/"
+try:
+    # Step 1: Send our message to the API (like sending a letter)
+    response = requests.get(api_url, params={"query": our_message})
+    
+    # Step 2: Check if the API got our message (status code 200 means success)
+    print(f"API responded with code: {response.status_code}")
+    
+    # Step 3: Try to read the API's reply
+    try:
+        api_reply = response.json()  # Convert reply to Python dictionary
+        message = api_reply.get('message', "The API didn't send a message back")
+        print("API says:", message)
+    except:
+        print("The API sent something we couldn't understand")
+        
+    # Bonus: Show the raw reply if you're curious
+    # print("Full reply:", response.text)
+    
+except requests.exceptions.ConnectionError:
+    print("Oops! Couldn't connect to the API. Is it running?")
+except Exception as e:
+    print(f"Something went wrong: {e}")
 
-get_response = requests.get(endpoint, json={"query": "hello world"})
+# ----------------------------#
+# 📚 REST API CONCEPTS
+# ----------------------------#
+# API = Application Programming Interface
+# Example: Your phone's app uses an API to talk to the phone's camera
 
+# A REST API is a type of web API
+# It uses HTTP methods like GET, POST, PUT, DELETE
+# HTTP request -> HTTP response
+# In REST APIs, the response is usually JSON (can also be XML, etc.)
+# Example: REST API HTTP request → JSON response (not HTML)
 
-
-#  this is a simple example of how to use the requests library in python
-
-
-
-print(get_response.text)
-
-#  to print the response code
- #aplication programming interface4
-
- # phone ->  camera -> app -> api -> CAMERA 
-
-#  REST API'S ia a web api 
-
-# http request is used in this 
-# http request -> http response
-
-# http response -> HTML 
-# rest api http request -> json (XML)
-
-
-
-# _________________this are required this response code __________________-
-# 200 - OK
-# 201 - Created
-# 204 - No Content
-# 301 - Moved Permanently
-# 400 - Bad Request
-# 401 - Unauthorized
-# 403 - Forbidden
-# 404 - Not Found
-# 500 - Internal Server Error
-# 503 - Service Unavailable
-# 504 - Gateway Timeout
-# 200 - OK  
-
-print(f"Response Code: {get_response.status_code}")
-
+# ----------------------------#
+# ✅ COMMON HTTP RESPONSE status - CODES
+# ----------------------------#
+# 200 - OK (Request succeeded)
+# 201 - Created (Resource created successfully)
+# 204 - No Content (Success but no response body)
+# 301 - Moved Permanently (URL changed)
+# 400 - Bad Request (Invalid data sent)
+# 401 - Unauthorized (Login needed)
+# 403 - Forbidden (No permission)
+# 404 - Not Found (Wrong URL or missing data)
+# 500 - Internal Server Error (Server crashed)
+# 503 - Service Unavailable (Server down or overloaded)
+# 504 - Gateway Timeout (Server not responding in time)

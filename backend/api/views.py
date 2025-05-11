@@ -34,3 +34,5 @@ def api_home(request, *args, **kwargs):
     return JsonResponse(data)
 
     print("API HOME VIEW CALLED")
+
+

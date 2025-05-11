@@ -14,13 +14,14 @@ try:
     response = requests.get(api_url, params={"query": our_message})
     
     # Step 2: Check if the API got our message (status code 200 means success)
-    print(f"API responded with code: {response.status_code}")
+    print(f"API responded with  status - code: {response.status_code}")
     
     # Step 3: Try to read the API's reply
     try:
         api_reply = response.json()  # Convert reply to Python dictionary
         message = api_reply.get('message', "The API didn't send a message back")
         print("API says:", message)
+        print("Full response:", response.text) 
     except:
         print("The API sent something we couldn't understand")
         
